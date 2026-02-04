@@ -2,143 +2,134 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>For Oreoluwa 💖</title>
+<title>Oreoluwa 💖</title>
 
 <style>
   * {
     box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+    font-family: "Poppins", system-ui, sans-serif;
   }
 
   body {
     margin: 0;
     height: 100vh;
-    background: linear-gradient(120deg, #ff5f9e, #5f9cff, #6ef3d6);
-    background-size: 400% 400%;
-    animation: bg 10s ease infinite;
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
-    color: white;
+    background: linear-gradient(120deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee);
+    background-size: 600% 600%;
+    animation: gradient 14s ease infinite;
   }
 
-  @keyframes bg {
+  @keyframes gradient {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
   }
 
-  .container {
+  .wrapper {
+    position: relative;
     text-align: center;
-    background: rgba(255,255,255,0.15);
-    padding: 50px;
-    border-radius: 25px;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.25);
-    max-width: 420px;
-    animation: popIn 1s ease;
+    background: rgba(255,255,255,0.25);
+    padding: 60px 50px;
+    border-radius: 30px;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+    animation: fadeUp 1.2s ease;
+    max-width: 440px;
   }
 
-  @keyframes popIn {
-    from { transform: scale(0.8); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   h1 {
-    font-size: 2.2em;
-    margin-bottom: 15px;
+    font-size: 2.6em;
+    margin-bottom: 10px;
+    color: #2b2b2b;
   }
 
   p {
-    font-size: 1.2em;
-    margin-bottom: 30px;
+    font-size: 1.3em;
+    margin-bottom: 40px;
+    color: #444;
   }
 
-  .btns {
+  .buttons {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 25px;
   }
 
   button {
-    padding: 14px 30px;
+    padding: 14px 36px;
     font-size: 1.1em;
+    border-radius: 50px;
     border: none;
-    border-radius: 40px;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: all 0.25s ease;
   }
 
   #yes {
-    background: #ff2e63;
+    background: #ff5f9e;
     color: white;
-    box-shadow: 0 10px 20px rgba(255,46,99,0.4);
+    box-shadow: 0 12px 25px rgba(255,95,158,0.35);
   }
 
   #no {
-    background: white;
-    color: #ff2e63;
+    background: transparent;
+    color: #ff5f9e;
   }
 
   button:hover {
-    transform: scale(1.1);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    transform: translateY(-4px);
   }
 
-  .confetti {
+  .floating {
     position: absolute;
-    font-size: 25px;
-    animation: fall 3s linear infinite;
+    border-radius: 50%;
+    opacity: 0.35;
+    animation: float 18s linear infinite;
   }
 
-  @keyframes fall {
-    0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+  @keyframes float {
+    from { transform: translateY(110vh); }
+    to { transform: translateY(-120vh); }
   }
 </style>
 </head>
 
 <body>
 
-<div class="container" id="card">
-  <h1>Oreoluwa 💕</h1>
+<!-- Soft floating shapes -->
+<div class="floating" style="width:120px;height:120px;left:10%;background:#ff9a9e;"></div>
+<div class="floating" style="width:80px;height:80px;left:70%;animation-duration:22s;background:#a6c1ee;"></div>
+<div class="floating" style="width:60px;height:60px;left:40%;animation-duration:16s;background:#fbc2eb;"></div>
+
+<div class="wrapper" id="card">
+  <h1>Oreoluwa</h1>
   <p>Will you be my Valentine?</p>
 
-  <div class="btns">
-    <button id="yes">Yes 💖</button>
-    <button id="no">No 🙃</button>
+  <div class="buttons">
+    <button id="yes">Yes</button>
+    <button id="no">No</button>
   </div>
 </div>
 
 <script>
   const noBtn = document.getElementById("no");
-  noBtn.addEventListener("mouseover", () => {
-    noBtn.style.display = "none";
+  noBtn.addEventListener("mouseenter", () => {
+    noBtn.style.opacity = "0.3";
   });
 
   document.getElementById("yes").addEventListener("click", () => {
-    celebrate();
-  });
-
-  function celebrate() {
     document.getElementById("card").innerHTML = `
-      <h1>YAY!!! 🎉💖</h1>
-      <p>You just made my heart very happy 😄</p>
-      <p>Happy Valentine’s Day 💘</p>
+      <h1>Thank you 💖</h1>
+      <p>You just made this day special.</p>
     `;
-
-    for (let i = 0; i < 60; i++) {
-      const conf = document.createElement("div");
-      conf.className = "confetti";
-      conf.innerHTML = ["💖","✨","💘","🎉"][Math.floor(Math.random()*4)];
-      conf.style.left = Math.random() * 100 + "vw";
-      conf.style.animationDuration = (Math.random()*2 + 2) + "s";
-      document.body.appendChild(conf);
-
-      setTimeout(() => conf.remove(), 3000);
-    }
-  }
+  });
 </script>
 
 </body>
