@@ -1,160 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Be My Valentine 💖</title>
+<meta charset="UTF-8">
+<title>Catch My Heart 💘</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      font-family: 'Segoe UI', sans-serif;
-    }
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+  }
 
-    body {
-      margin: 0;
-      height: 100vh;
-      background: linear-gradient(135deg, #ff758c, #ff7eb3);
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      color: white;
-    }
+  body {
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(270deg, #ff4ecd, #5ee7df, #ffd86f);
+    background-size: 600% 600%;
+    animation: bgMove 12s ease infinite;
+  }
 
-    .card {
-      background: rgba(255, 255, 255, 0.15);
-      padding: 40px;
-      border-radius: 20px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-      max-width: 400px;
-      z-index: 10;
-    }
+  @keyframes bgMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
 
-    h1 {
-      font-size: 2.5em;
-      margin-bottom: 10px;
-    }
+  #game {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
 
-    p {
-      font-size: 1.2em;
-      margin-bottom: 30px;
-    }
+  .character {
+    position: absolute;
+    font-size: 50px;
+    transition: transform 0.2s;
+    user-select: none;
+  }
 
-    button {
-      font-size: 1.1em;
-      padding: 12px 25px;
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      margin: 10px;
-      transition: transform 0.2s;
-    }
+  #boy {
+    left: 10%;
+    top: 50%;
+  }
 
-    #yes {
-      background: #ff2e63;
-      color: white;
-    }
+  #girl {
+    right: 10%;
+    top: 40%;
+  }
 
-    #no {
-      background: white;
-      color: #ff2e63;
-      position: absolute;
-    }
+  .heart {
+    position: absolute;
+    font-size: 30px;
+    cursor: pointer;
+    animation: pop 0.6s infinite alternate;
+  }
 
-    button:hover {
-      transform: scale(1.1);
-    }
+  @keyframes pop {
+    from { transform: scale(1); }
+    to { transform: scale(1.3); }
+  }
 
-    /* Floating hearts */
-    .hearts span {
-      position: absolute;
-      bottom: -50px;
-      font-size: 20px;
-      animation: float 6s linear infinite;
-      opacity: 0.8;
-    }
+  #scoreBox {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: white;
+    color: #ff2e63;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 18px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  }
 
-    @keyframes float {
-      0% { transform: translateY(0); opacity: 0; }
-      50% { opacity: 1; }
-      100% { transform: translateY(-110vh); opacity: 0; }
-    }
+  #message {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    font-size: 2em;
+  }
 
-    /* Running characters */
-    .runner {
-      position: absolute;
-      font-size: 40px;
-      animation: runAround 10s linear infinite;
-    }
-
-    .girl {
-      animation-delay: 0s;
-    }
-
-    .boy {
-      animation-delay: 5s;
-    }
-
-    @keyframes runAround {
-      0%   { transform: translate(0, 0); }
-      25%  { transform: translate(80vw, 10vh); }
-      50%  { transform: translate(70vw, 80vh); }
-      75%  { transform: translate(10vw, 70vh); }
-      100% { transform: translate(0, 0); }
-    }
-  </style>
+  #message button {
+    margin-top: 20px;
+    font-size: 1em;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 30px;
+    background: #ff4ecd;
+    color: white;
+    cursor: pointer;
+  }
+</style>
 </head>
+
 <body>
+<div id="game">
 
-  <!-- Running people -->
-  <div class="runner girl">👧</div>
-  <div class="runner boy">🧑‍🦱</div>
+  <div id="scoreBox">💖 Hearts: <span id="score">0</span></div>
 
-  <div class="card" id="card">
-    <h1>Oreoluwa 💕</h1>
+  <div id="boy" class="character">🧑🏽‍🦱</div>
+  <div id="girl" class="character">👧🏽</div>
+
+</div>
+
+<div id="message">
+  <div>
+    <p>Oreoluwa 💕</p>
     <p>Will you be my Valentine?</p>
-    <button id="yes">Yes 💖</button>
-    <button id="no">No 🙃</button>
+    <button onclick="celebrate()">YES 💖</button>
   </div>
+</div>
 
-  <div class="hearts"></div>
+<script>
+  const game = document.getElementById("game");
+  const boy = document.getElementById("boy");
+  const girl = document.getElementById("girl");
+  const scoreEl = document.getElementById("score");
+  const message = document.getElementById("message");
 
-  <script>
-    // Floating hearts
-    const heartsContainer = document.querySelector('.hearts');
+  let score = 0;
 
-    function createHeart() {
-      const heart = document.createElement('span');
-      heart.innerHTML = '❤️';
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
-      heartsContainer.appendChild(heart);
+  function randomPos(max) {
+    return Math.random() * max;
+  }
 
-      setTimeout(() => heart.remove(), 7000);
-    }
+  function moveCharacters() {
+    boy.style.left = randomPos(window.innerWidth - 60) + "px";
+    boy.style.top = randomPos(window.innerHeight - 60) + "px";
 
-    setInterval(createHeart, 300);
+    girl.style.left = randomPos(window.innerWidth - 60) + "px";
+    girl.style.top = randomPos(window.innerHeight - 60) + "px";
+  }
 
-    // No button runs away
-    const noBtn = document.getElementById('no');
-    noBtn.addEventListener('mouseover', () => {
-      const x = Math.random() * (window.innerWidth - 100);
-      const y = Math.random() * (window.innerHeight - 100);
-      noBtn.style.left = x + 'px';
-      noBtn.style.top = y + 'px';
-    });
+  setInterval(moveCharacters, 1200);
 
-    // Yes button reaction
-    document.getElementById('yes').addEventListener('click', () => {
-      document.getElementById('card').innerHTML = `
-        <h1>Yay!!! 💖🎉</h1>
-        <p>You just made me the happiest person 🥰</p>
-        <p>Happy Valentine’s Day 💘</p>
-      `;
-    });
-  </script>
+  function spawnHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.textContent = "💖";
+    heart.style.left = randomPos(window.innerWidth - 40) + "px";
+    heart.style.top = randomPos(window.innerHeight - 40) + "px";
 
+    heart.onclick = () => {
+      score++;
+      scoreEl.textContent = score;
+      heart.remove();
+
+      if (score >= 7) {
+        message.style.display = "flex";
+      }
+    };
+
+    game.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 3000);
+  }
+
+  setInterval(spawnHeart, 800);
+
+  function celebrate() {
+    message.innerHTML = `
+      <p>YAYYYY 🎉💘</p>
+      <p>You just made me incredibly happy 😄</p>
+      <p>Happy Valentine’s Day 💖</p>
+    `;
+  }
+</script>
 </body>
 </html>
